@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collection &mdash; Solstice Eyewear</title>
+  <meta name="description" content="Browse the full Solstice collection &mdash; polarized sunglasses and optical frames, handmade in small batches." />
+  <meta name="theme-color" content="#15140f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px;-webkit-font-smoothing:antialiased}
+    body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden;transition:background .4s,color .4s}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+    ul{list-style:none}
+    img{display:block;max-width:100%}
+    :focus-visible{outline:2px solid #3f6b5c;outline-offset:2px}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+    @media(max-width:1920px){html{font-size:0.833333vw}}
+    @media(max-width:1440px){html{font-size:1.111111vw}}
+    @media(max-width:1024px){html{font-size:1.5625vw}}
+    @media(max-width:640px){html{font-size:4.444444vw}}
+
+    :root{
+      --bg:#f7f4ec;--ink:#15140f;--muted:#847d6d;--subtle:#b7b0a0;--line:#e4ddca;
+      --surface:#efe8d8;--accent:#3f6b5c;--accent-2:#6f9686;--gold:#c79a52;
+      --header-bg:rgba(247,244,236,.9);
+      --card-bg:#fff;--card-text:#15140f;
+      --hero-bg:#15140f;--hero-text:#fff;
+      --footer-bg:#15140f;--footer-text:#fff;
+      --radius-pill:9999px;--radius-card:1.75rem;--radius-card-sm:1.25rem;--radius-control:.875rem;
+    }
+    [data-theme="dark"]{
+      --bg:#0c0b08;--ink:#f0ece0;--muted:#9a9282;--subtle:#5a5446;--line:#222018;
+      --surface:#15140e;--accent:#5a9b83;--accent-2:#7fbea6;--gold:#d4a85a;
+      --header-bg:rgba(12,11,8,.92);
+      --card-bg:#15140e;--card-text:#f0ece0;
+      --hero-bg:#15140e;--hero-text:#f0ece0;
+      --footer-bg:#080806;--footer-text:#f0ece0;
+    }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    .lenis.lenis-smooth iframe { pointer-events: none; }
+
+    .shell{max-width:78rem;margin-inline:auto;padding-inline:1.25rem}
+    @media(min-width:640px){.shell{padding-inline:2rem}}
+
+    /* HEADER */
+    .site-header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background .4s,border-color .4s}
+    .site-header-inner{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;max-width:78rem;margin-inline:auto}
+    @media(min-width:640px){.site-header-inner{padding:.875rem 2rem}}
+    .header-brand{display:flex;align-items:center;gap:.5rem;font-family:'Fraunces',serif;font-weight:600;font-size:1.125rem;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+    .header-brand:hover{transform:scale(1.04)}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;color:var(--muted);transition:color .2s}
+    .back-btn:hover{color:var(--ink)}
+
+    /* HERO BANNER */
+    .collection-hero{background:var(--hero-bg);color:var(--hero-text);padding:5rem 1.25rem 4rem;position:relative;overflow:hidden;transition:background .4s,color .4s;border-bottom:1px solid var(--line)}
+    @media(min-width:640px){.collection-hero{padding:6rem 2rem 5rem}}
+    .collection-hero-inner{max-width:78rem;margin-inline:auto;position:relative;z-index:1}
+    .coll-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.6875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem}
+    .coll-eyebrow::before{content:'';display:block;width:1.25rem;height:1px;background:currentColor}
+    .coll-h1{font-family:'Fraunces',serif;font-weight:600;font-size:3rem;line-height:1.1;margin-bottom:1rem}
+    @media(min-width:640px){.coll-h1{font-size:4.5rem}}
+    .coll-sub{font-size:1rem;color:var(--muted);max-width:40ch;line-height:1.6}
+    .coll-hero-wm{position:absolute;bottom:-2rem;right:0;font-family:'Fraunces',serif;font-weight:600;font-size:9rem;color:rgba(128,128,128,.04);white-space:nowrap;pointer-events:none;user-select:none}
+
+    /* FILTERS */
+    .filters-bar{padding:1.5rem 1.25rem;border-bottom:1px solid var(--line);position:sticky;top:61px;z-index:40;background:var(--header-bg);backdrop-filter:blur(10px);transition:background .4s,border-color .4s}
+    @media(min-width:640px){.filters-bar{padding:1.5rem 2rem}}
+    .filters-inner{max-width:78rem;margin-inline:auto;display:flex;gap:.625rem;align-items:center;flex-wrap:wrap}
+    .filter-pill{display:inline-flex;align-items:center;gap:.375rem;padding:.5rem 1rem;border-radius:var(--radius-pill);font-size:.8125rem;font-weight:600;letter-spacing:.04em;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .2s}
+    .filter-pill:hover{border-color:var(--ink);color:var(--ink)}
+    .filter-pill.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+    .filter-count{font-size:.75rem;font-weight:500;color:var(--subtle);margin-left:auto;white-space:nowrap}
+
+    /* GRID */
+    .coll-section{padding:3rem 1.25rem 6rem}
+    @media(min-width:640px){.coll-section{padding:3rem 2rem 6rem}}
+    .coll-grid{max-width:78rem;margin-inline:auto;display:grid;gap:1.5rem;grid-template-columns:1fr}
+    @media(min-width:540px){.coll-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:900px){.coll-grid{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:1200px){.coll-grid{grid-template-columns:repeat(4,1fr)}}
+
+    /* PRODUCT CARD */
+    .prod-card{background:var(--card-bg);color:var(--card-text);border-radius:var(--radius-card);overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1),box-shadow .3s,background .4s}
+    .prod-card.visible{opacity:1;transform:translateY(0)}
+    @media(hover:hover){.prod-card.visible:hover{box-shadow:0 16px 48px rgba(0,0,0,.25);transform:translateY(-4px)!important}}
+    .prod-card-img-wrap{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--surface)}
+    .prod-card-img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+    @media(hover:hover){.prod-card:hover .prod-card-img{transform:scale(1.06)}}
+    .prod-card-badge{position:absolute;top:1rem;left:1rem;padding:.3rem .75rem;border-radius:var(--radius-pill);font-size:.6875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .badge-new{background:var(--ink);color:var(--gold)}
+    .badge-bestseller{background:var(--accent);color:#fff}
+    .badge-optical{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+    .prod-card-quick{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%) translateY(12px);opacity:0;transition:opacity .25s,transform .25s;white-space:nowrap;background:var(--ink);color:var(--bg);border:none;cursor:pointer;padding:.5rem 1.25rem;border-radius:var(--radius-pill);font-size:.8125rem;font-weight:600;font-family:inherit}
+    @media(hover:hover){.prod-card:hover .prod-card-quick{opacity:1;transform:translateX(-50%) translateY(0)}}
+    .prod-card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column;gap:.5rem}
+    .prod-card-meta{display:flex;justify-content:space-between;align-items:center}
+    .prod-card-cat{font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle)}
+    .prod-card-price{font-size:.9375rem;font-weight:700;color:var(--gold)}
+    .prod-card-name{font-family:'Fraunces',serif;font-size:1.125rem;font-weight:500;line-height:1.3;color:var(--card-text)}
+    .prod-card-desc{font-size:.8125rem;color:var(--muted);line-height:1.55;flex:1}
+    .prod-card-tags{display:flex;flex-wrap:wrap;gap:.375rem;margin-top:.5rem}
+    .tag{font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .625rem;border-radius:var(--radius-pill);background:var(--surface);color:var(--muted)}
+    .prod-card-actions{display:flex;gap:.5rem;margin-top:1rem}
+    .btn-add{flex:1;padding:.75rem;background:var(--ink);color:var(--bg);border-radius:var(--radius-control);font-weight:700;font-size:.875rem;cursor:pointer;transition:background .2s;border:none}
+    .btn-add:hover{opacity:0.9}
+    .btn-wishlist{width:2.5rem;height:2.5rem;border:1.5px solid var(--line);border-radius:var(--radius-control);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s;flex-shrink:0;background:var(--surface)}
+    .btn-wishlist:hover{border-color:var(--ink);color:var(--ink)}
+
+    /* FEATURED LARGE CARD */
+    .featured-card{background:var(--card-bg);color:var(--card-text);border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;display:grid;grid-template-columns:1fr;opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1),background .4s}
+    @media(min-width:640px){.featured-card{grid-template-columns:1fr 1fr}}
+    .featured-card.visible{opacity:1;transform:translateY(0)}
+    .featured-card-img{aspect-ratio:1;object-fit:cover;width:100%;height:100%}
+    .featured-card-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1.25rem}
+    .featured-label{font-size:.6875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+    .featured-name{font-family:'Fraunces',serif;font-size:2.25rem;font-weight:600;line-height:1.1}
+    .featured-desc{font-size:.9rem;color:var(--muted);line-height:1.6;max-width:32ch}
+    .featured-price{font-size:1.25rem;font-weight:700;color:var(--gold)}
+    .featured-cta{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.5rem;background:var(--ink);color:var(--bg);border-radius:var(--radius-pill);font-weight:700;font-size:.9rem;transition:all .2s;align-self:flex-start}
+    .featured-cta:hover{opacity:0.9;transform:scale(1.03)}
+
+    /* SECTION HEADING */
+    .coll-section-heading{max-width:78rem;margin-inline:auto;margin-bottom:2rem;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .coll-section-title{font-family:'Fraunces',serif;font-weight:600;font-size:2rem}
+    @media(min-width:640px){.coll-section-title{font-size:2rem}}
+    .coll-section-sub{font-size:.875rem;color:var(--muted)}
+    .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.6875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.625rem}
+    .eyebrow::before{content:'';display:block;width:1.25rem;height:1px;background:currentColor;opacity:.5}
+
+    /* FOOTER */
+    .coll-footer{background:var(--footer-bg);color:var(--footer-text);padding:3rem 1.25rem;margin-top:2rem;border-top:1px solid var(--line);transition:background .4s,color .4s}
+    @media(min-width:640px){.coll-footer{padding:3rem 2rem}}
+    .coll-footer-inner{max-width:78rem;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+    .coll-footer-brand{display:flex;align-items:center;gap:.5rem;font-family:'Fraunces',serif;font-weight:600;font-size:1.125rem;color:var(--footer-text)}
+    .coll-footer-copy{font-size:.8rem;color:var(--muted)}
+    .coll-footer-links{display:flex;gap:1.5rem}
+    .coll-footer-links a{font-size:.875rem;color:var(--muted);transition:color .2s}
+    .coll-footer-links a:hover{color:var(--ink)}
+
+    /* MODAL */
+    #quick-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+    #quick-modal.open{opacity:1;pointer-events:auto}
+    .qm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(8px)}
+    .qm-box{position:relative;z-index:1;background:var(--card-bg);color:var(--card-text);border:1px solid var(--line);border-radius:var(--radius-card);width:min(44rem,94vw);max-height:90vh;overflow-y:auto;transform:scale(.96) translateY(16px);transition:transform .4s cubic-bezier(.22,1,.36,1),background .4s;display:grid;grid-template-columns:1fr}
+    @media(min-width:600px){.qm-box{grid-template-columns:1fr 1fr}}
+    #quick-modal.open .qm-box{transform:scale(1) translateY(0)}
+    .qm-img{aspect-ratio:1;object-fit:cover;width:100%;border-radius:var(--radius-card) var(--radius-card) 0 0}
+    @media(min-width:600px){.qm-img{border-radius:var(--radius-card) 0 0 var(--radius-card);height:100%}}
+    .qm-body{padding:2rem;display:flex;flex-direction:column;gap:1rem}
+    .qm-cat{font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .qm-name{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:600}
+    .qm-price{font-size:1.25rem;font-weight:700;color:#c79a52}
+    .qm-desc{font-size:.9rem;color:var(--muted);line-height:1.65}
+    .qm-tags{display:flex;flex-wrap:wrap;gap:.375rem}
+    .qm-add{width:100%;padding:.875rem;background:#15140f;color:#fff;border-radius:var(--radius-control);font-weight:700;font-size:.9375rem;cursor:pointer;transition:background .2s;margin-top:.5rem}
+    .qm-add:hover{background:#2a2920}
+    .qm-close{position:absolute;top:1rem;right:1rem;width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(21,20,15,.08);border:none;cursor:pointer;transition:background .2s}
+    .qm-close:hover{background:rgba(21,20,15,.15)}
+    .hidden{display:none!important}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="header-brand">
+      <svg width="1.25em" height=".625em" viewBox="0 0 48 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="36" cy="12" r="9"/><path d="M21 12h6"/></svg>
+      Solstice
+    </a>
+    <a href="index.html" class="back-btn" style="margin-left:auto; margin-right:1.5rem;">
+      <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Home
+    </a>
+    <div style="display:flex; gap:1rem; align-items:center;">
+      <button class="header-btn-auth" id="header-auth-btn" style="background:none; border:none; display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-family:inherit; font-weight:500;">
+        <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="auth-btn-text">Sign In</span>
+      </button>
+      <button class="header-btn-cart" id="header-cart-btn" style="background:none; border:none; display:flex; align-items:center; cursor:pointer;">
+        <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm10 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="header-cart-count" style="background:var(--accent); color:#fff; border-radius:50%; min-width:1.25rem; height:1.25rem; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; margin-left:0.25rem;">0</span>
+      </button>
+      <div class="header-fav-wrap">
+        <button class="header-btn-fav" aria-label="Open favourites" style="background:none; border:none; display:flex; align-items:center; cursor:pointer; color:var(--ink);">
+          <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <span class="fav-badge"></span>
+      </div>
+      <button class="dark-toggle" aria-label="Toggle dark mode"></button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO BANNER -->
+<section class="collection-hero">
+  <div class="collection-hero-inner">
+    <div class="coll-eyebrow">Solstice Studio</div>
+    <h1 class="coll-h1">The Full Collection</h1>
+    <p class="coll-sub">Polarized sunglasses and optical frames, handmade in small batches. Every pair shipped within 24 hours.</p>
+  </div>
+  <div class="coll-hero-wm" aria-hidden="true">SOLSTICE</div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar" role="navigation" aria-label="Filter by category">
+  <div class="filters-inner">
+    <button class="filter-pill active" data-filter="all">All</button>
+    <button class="filter-pill" data-filter="sunglasses">Sunglasses</button>
+    <button class="filter-pill" data-filter="optical">Optical</button>
+    <button class="filter-pill" data-filter="mens">Men&rsquo;s</button>
+    <span class="filter-count" id="filter-count">4 styles</span>
+  </div>
+</div>
+
+<!-- FEATURED -->
+<section class="coll-section" style="padding-bottom:2rem">
+  <div class="shell">
+    <div class="coll-section-heading">
+      <div>
+        <div class="eyebrow">Editor&rsquo;s Pick</div>
+        <div class="coll-section-title">Featured This Season</div>
+      </div>
+    </div>
+    <article class="featured-card" id="featured-card">
+      <img class="featured-card-img" src="##MERIDIAN_B64##" alt="Meridian sunglasses" loading="lazy" />
+      <div class="featured-card-body">
+        <div class="featured-label">Best Seller</div>
+        <div class="featured-name">Meridian<br>&mdash; Amber</div>
+        <p class="featured-desc">Amber polarized lenses ground in-house, set in hand-polished Italian acetate. The one frame you reach for every day.</p>
+        <div class="featured-price">$189</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.375rem">
+          <span style="padding:.25rem .75rem;border-radius:9999px;border:1px solid rgba(255,255,255,.15);font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5)">Polarized</span>
+          <span style="padding:.25rem .75rem;border-radius:9999px;border:1px solid rgba(255,255,255,.15);font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5)">Acetate</span>
+          <span style="padding:.25rem .75rem;border-radius:9999px;border:1px solid rgba(255,255,255,.15);font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5)">UV400</span>
+        </div>
+        <button class="featured-cta" onclick="openQuick('meridian')">
+          Quick View
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ALL PRODUCTS -->
+<section class="coll-section" id="products-section">
+  <div class="shell">
+    <div class="coll-section-heading">
+      <div>
+        <div class="eyebrow">All Styles</div>
+        <div class="coll-section-title">Shop by Frame</div>
+      </div>
+    </div>
+    <div class="coll-grid" id="products-grid">
+      <!-- Meridian -->
+      <article class="prod-card" data-category="sunglasses" data-id="meridian">
+        <div class="prod-card-img-wrap">
+          <a href="product.html?slug=meridian"><img class="prod-card-img" src="##MERIDIAN_B64##" alt="Meridian sunglasses" loading="lazy" /></a>
+          <span class="prod-card-badge badge-bestseller">Best Seller</span>
+          <button class="prod-card-quick" onclick="openQuick('meridian')">Quick View</button>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-meta"><span class="prod-card-cat">Sunglasses</span><span class="prod-card-price">$189</span></div>
+          <a href="product.html?slug=meridian"><div class="prod-card-name">Meridian</div></a>
+          <div class="prod-card-desc">Amber polarized lenses, hand-polished acetate.</div>
+          <div class="prod-card-tags"><span class="tag">Polarized</span><span class="tag">Acetate</span><span class="tag">UV400</span></div>
+          <div class="prod-card-actions">
+            <button class="btn-add" onclick="addToCart('meridian','Meridian',189)">Add to Cart</button>
+            <button class="btn-wishlist" aria-label="Save to wishlist"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Horizon -->
+      <article class="prod-card" data-category="sunglasses mens" data-id="horizon">
+        <div class="prod-card-img-wrap">
+          <a href="product.html?slug=horizon"><img class="prod-card-img" src="##HORIZON_B64##" alt="Horizon sunglasses" loading="lazy" /></a>
+          <span class="prod-card-badge badge-new">New</span>
+          <button class="prod-card-quick" onclick="openQuick('horizon')">Quick View</button>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-meta"><span class="prod-card-cat">Sunglasses</span><span class="prod-card-price">$219</span></div>
+          <a href="product.html?slug=horizon"><div class="prod-card-name">Horizon</div></a>
+          <div class="prod-card-desc">Mirrored lenses set in a lightweight titanium frame.</div>
+          <div class="prod-card-tags"><span class="tag">Titanium</span><span class="tag">Mirrored</span><span class="tag">UV400</span></div>
+          <div class="prod-card-actions">
+            <button class="btn-add" onclick="addToCart('horizon','Horizon',219)">Add to Cart</button>
+            <button class="btn-wishlist" aria-label="Save to wishlist"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Solace -->
+      <article class="prod-card" data-category="optical" data-id="solace">
+        <div class="prod-card-img-wrap">
+          <a href="product.html?slug=solace"><img class="prod-card-img" src="##SOLACE_B64##" alt="Solace optical frames" loading="lazy" /></a>
+          <span class="prod-card-badge badge-optical">Optical</span>
+          <button class="prod-card-quick" onclick="openQuick('solace')">Quick View</button>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-meta"><span class="prod-card-cat">Optical</span><span class="prod-card-price">$149</span></div>
+          <a href="product.html?slug=solace"><div class="prod-card-name">Solace</div></a>
+          <div class="prod-card-desc">A featherweight optical frame, blue-light filter available.</div>
+          <div class="prod-card-tags"><span class="tag">Optical</span><span class="tag">Lightweight</span><span class="tag">RX-ready</span></div>
+          <div class="prod-card-actions">
+            <button class="btn-add" onclick="addToCart('solace','Solace',149)">Add to Cart</button>
+            <button class="btn-wishlist" aria-label="Save to wishlist"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Drift -->
+      <article class="prod-card" data-category="sunglasses" data-id="drift">
+        <div class="prod-card-img-wrap">
+          <a href="product.html?slug=drift"><img class="prod-card-img" src="##DRIFT_B64##" alt="Drift sunglasses" loading="lazy" /></a>
+          <button class="prod-card-quick" onclick="openQuick('drift')">Quick View</button>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-meta"><span class="prod-card-cat">Sunglasses</span><span class="prod-card-price">$179</span></div>
+          <a href="product.html?slug=drift"><div class="prod-card-name">Drift</div></a>
+          <div class="prod-card-desc">Gradient smoke lenses in an oversized round frame.</div>
+          <div class="prod-card-tags"><span class="tag">Gradient</span><span class="tag">Oversized</span><span class="tag">UV400</span></div>
+          <div class="prod-card-actions">
+            <button class="btn-add" onclick="addToCart('drift','Drift',179)">Add to Cart</button>
+            <button class="btn-wishlist" aria-label="Save to wishlist"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Male Horizon (Men's) -->
+      <article class="prod-card" data-category="sunglasses mens" data-id="horizon-mens">
+        <div class="prod-card-img-wrap">
+          <a href="product.html?slug=horizon-mens"><img class="prod-card-img" src="##MALE_B64##" alt="Horizon mens sunglasses" loading="lazy" /></a>
+          <span class="prod-card-badge badge-new">Men&rsquo;s Edit</span>
+          <button class="prod-card-quick" onclick="openQuick('horizon-mens')">Quick View</button>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-meta"><span class="prod-card-cat">Men&rsquo;s</span><span class="prod-card-price">$219</span></div>
+          <a href="product.html?slug=horizon-mens"><div class="prod-card-name">Horizon &mdash; Men&rsquo;s</div></a>
+          <div class="prod-card-desc">Same mirrored titanium frame, styled for a stronger silhouette.</div>
+          <div class="prod-card-tags"><span class="tag">Titanium</span><span class="tag">Mirrored</span><span class="tag">UV400</span></div>
+          <div class="prod-card-actions">
+            <button class="btn-add" onclick="addToCart('horizon-mens','Horizon Men\'s',219)">Add to Cart</button>
+            <button class="btn-wishlist" aria-label="Save to wishlist"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="coll-footer">
+  <div class="coll-footer-inner">
+    <a href="index.html" class="coll-footer-brand">
+      <svg width="1.25em" height=".625em" viewBox="0 0 48 24" fill="none" stroke="#c79a52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="36" cy="12" r="9"/><path d="M21 12h6"/></svg>
+      Solstice
+    </a>
+    <div class="coll-footer-links">
+      <a href="index.html#about">Studio</a>
+      <a href="index.html#why">Why Us</a>
+      <a href="#">Contact</a>
+    </div>
+    <span class="coll-footer-copy">&copy; 2026 Solstice Eyewear</span>
+  </div>
+</footer>
+
+<!-- QUICK VIEW MODAL -->
+<div id="quick-modal" role="dialog" aria-modal="true" aria-label="Quick product view" aria-hidden="true">
+  <div class="qm-backdrop" id="qm-backdrop"></div>
+  <div class="qm-box">
+    <button class="qm-close" id="qm-close" aria-label="Close quick view">
+      <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l16 16M20 4 4 20"/></svg>
+    </button>
+    <img class="qm-img" id="qm-img" src="" alt="" />
+    <div class="qm-body">
+      <div class="qm-cat" id="qm-cat"></div>
+      <div class="qm-name" id="qm-name"></div>
+      <div class="qm-price" id="qm-price"></div>
+      <p class="qm-desc" id="qm-desc"></p>
+      <div class="qm-tags" id="qm-tags"></div>
+      <button class="qm-add" id="qm-add-btn">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#15140f;color:#fff;padding:.75rem 1.5rem;border-radius:9999px;font-size:.875rem;font-weight:600;z-index:300;transition:transform .4s cubic-bezier(.22,1,.36,1);pointer-events:none;white-space:nowrap"></div>
+
+<script>
+// Product data (base64 srcs injected by build script)
+const PRODUCTS = {
+  meridian: {
+    cat:'Sunglasses', name:'Meridian \u2014 Amber', price:'$189', rawPrice:189,
+    desc:'Amber polarized lenses ground in-house, set in hand-polished Italian acetate. The one frame you reach for every day.',
+    tags:['Polarized','Acetate','UV400'],
+    img: document.querySelector('[data-id="meridian"] .prod-card-img')?.src || ''
+  },
+  horizon: {
+    cat:'Sunglasses', name:'Horizon \u2014 Mirrored', price:'$219', rawPrice:219,
+    desc:'Mirrored lenses set in a lightweight titanium frame. Built to handle everything the day throws at you.',
+    tags:['Titanium','Mirrored','UV400'],
+    img: document.querySelector('[data-id="horizon"] .prod-card-img')?.src || ''
+  },
+  solace: {
+    cat:'Optical', name:'Solace \u2014 Clear', price:'$149', rawPrice:149,
+    desc:'A featherweight optical frame with optional blue-light filter. Upload your prescription at checkout.',
+    tags:['Optical','Lightweight','RX-ready'],
+    img: document.querySelector('[data-id="solace"] .prod-card-img')?.src || ''
+  },
+  drift: {
+    cat:'Sunglasses', name:'Drift \u2014 Gradient', price:'$179', rawPrice:179,
+    desc:'Gradient smoke lenses in an oversized round frame. For the ones who like to stand out.',
+    tags:['Gradient','Oversized','UV400'],
+    img: document.querySelector('[data-id="drift"] .prod-card-img')?.src || ''
+  },
+  'horizon-mens': {
+    cat:"Men's", name:"Horizon \u2014 Men's", price:'$219', rawPrice:219,
+    desc:'Same mirrored titanium construction, proportioned for a stronger silhouette. Polarized, UV400.',
+    tags:['Titanium','Mirrored','UV400'],
+    img: document.querySelector('[data-id="horizon-mens"] .prod-card-img')?.src || ''
+  },
+};
+
+// Adaptive grid
+(function applyGrid(){
+  const w=window.innerWidth, size=16-(16*(((1920-w)/1920)*100)*0.6666)/100;
+  if(size>16) document.documentElement.style.fontSize=size+'px';
+  else document.documentElement.style.removeProperty('font-size');
+})();
+window.addEventListener('resize',function(){
+  const w=window.innerWidth,size=16-(16*(((1920-w)/1920)*100)*0.6666)/100;
+  if(size>16) document.documentElement.style.fontSize=size+'px';
+  else document.documentElement.style.removeProperty('font-size');
+});
+
+// Intersection observer
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('visible');io.unobserve(e.target);});
+},{threshold:0.1});
+document.querySelectorAll('.prod-card,.featured-card').forEach(el=>io.observe(el));
+
+// Filters
+const filterBtns=document.querySelectorAll('.filter-pill');
+const cards=document.querySelectorAll('.prod-card');
+const countEl=document.getElementById('filter-count');
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    let shown=0;
+    cards.forEach(c=>{
+      const cats=c.dataset.category||'';
+      const show=f==='all'||cats.includes(f);
+      c.style.display=show?'':'none';
+      if(show) shown++;
+    });
+    countEl.textContent=`${shown} style${shown!==1?'s':''}`;
+  });
+});
+countEl.textContent=`${cards.length} styles`;
+
+// Quick view modal
+const modal=document.getElementById('quick-modal');
+let currentProd=null;
+window.openQuick=function(id){
+  const p=PRODUCTS[id]; if(!p) return;
+  currentProd=id;
+  document.getElementById('qm-img').src=p.img;
+  document.getElementById('qm-img').alt=p.name;
+  document.getElementById('qm-cat').textContent=p.cat;
+  document.getElementById('qm-name').textContent=p.name;
+  document.getElementById('qm-price').textContent=p.price;
+  document.getElementById('qm-desc').textContent=p.desc;
+  const tagsEl=document.getElementById('qm-tags');
+  tagsEl.innerHTML=p.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+};
+function closeQuick(){
+  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+  document.body.style.removeProperty('overflow');
+}
+document.getElementById('qm-close').addEventListener('click',closeQuick);
+document.getElementById('qm-backdrop').addEventListener('click',closeQuick);
+document.getElementById('qm-add-btn').addEventListener('click',()=>{
+  if(currentProd){ addToCart(currentProd, PRODUCTS[currentProd].name, PRODUCTS[currentProd].rawPrice); closeQuick(); }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeQuick();});
+
+
+
+// Toast
+function showToast(msg){
+  const t=document.getElementById('toast');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>{t.style.transform='translateX(-50%) translateY(100px)';},2800);
+}
+</script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+  if(window.Lenis){
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+</script>
+##FRONTEND_COMPONENTS##
+</body>
+</html>

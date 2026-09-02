@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solstice &mdash; Independent Eyewear Studio</title>
+  <meta name="description" content="Solstice is an independent eyewear studio crafting polarized sunglasses and optical frames &mdash; made to be worn, not shelved." />
+  <meta name="theme-color" content="#15140f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden;transition:background .4s,color .4s}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+    ul{list-style:none}
+    img{display:block}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    :focus-visible{outline:2px solid #3f6b5c;outline-offset:2px}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+    @media(max-width:1920px){html{font-size:0.833333vw}}
+    @media(max-width:1440px){html{font-size:1.111111vw}}
+    @media(max-width:1024px){html{font-size:1.5625vw}}
+    @media(max-width:640px){html{font-size:4.444444vw}}
+
+    :root{
+      --bg:#f7f4ec;--ink:#15140f;--muted:#847d6d;--subtle:#b7b0a0;--line:#e4ddca;
+      --surface:#efe8d8;--surface-2:#e2d9c3;--accent:#3f6b5c;--accent-2:#6f9686;
+      --gold:#c79a52;--hero-tint:#cfc4a4;
+      --radius-pill:9999px;--radius-card:1.75rem;--radius-card-sm:1.25rem;--radius-control:.875rem;
+      --text-watermark:9rem;--container-shell:78rem;
+      --header-scrolled-bg:rgba(247,244,236,.88);
+      --loader-bg:#15140f;
+      --hero-vignette-top:rgba(247,244,236,.35);
+      --hero-vignette-bot:rgba(247,244,236,.45);
+      --watermark-color:rgba(21,20,15,.06);
+      --status-div-color:rgba(21,20,15,.2);
+      --btn-outline-border:rgba(21,20,15,.25);
+      --btn-dark-bg:#15140f;--btn-dark-text:#fff;--btn-dark-hover:#2a2920;
+      --card-bg:#15140f;--card-text:#fff;
+      --stats-bg:#15140f;--stats-text:#fff;--stats-border:transparent;
+      --footer-bg:#15140f;--footer-text:#fff;--footer-border:rgba(255,255,255,0.08);
+      --nav-bg:#15140f;--nav-text:#fff;
+      --modal-bg:#fff;--modal-text:#15140f;
+      --about-craft-bg:rgba(255,255,255,.5);
+    }
+    [data-theme="dark"]{
+      --bg:#0c0b08;--ink:#f0ece0;--muted:#9a9282;--subtle:#5a5446;--line:#222018;
+      --surface:#15140e;--surface-2:#1c1a12;--accent:#5a9b83;--accent-2:#7fbea6;
+      --gold:#d4a85a;--hero-tint:#080806;
+      --header-scrolled-bg:rgba(12,11,8,.92);
+      --loader-bg:#0c0b08;
+      --hero-vignette-top:rgba(12,11,8,.6);
+      --hero-vignette-bot:rgba(12,11,8,.7);
+      --watermark-color:rgba(240,236,224,.03);
+      --status-div-color:rgba(240,236,224,.2);
+      --btn-outline-border:rgba(240,236,224,.2);
+      --btn-dark-bg:#f0ece0;--btn-dark-text:#0c0b08;--btn-dark-hover:#d4d0c0;
+      --card-bg:#15140e;--card-text:#f0ece0;
+      --stats-bg:#15140e;--stats-text:#f0ece0;--stats-border:#222018;
+      --footer-bg:#080806;--footer-text:#f0ece0;--footer-border:#222018;
+      --nav-bg:#0c0b08;--nav-text:#f0ece0;
+      --modal-bg:#15140e;--modal-text:#f0ece0;
+      --about-craft-bg:rgba(255,255,255,.05);
+    }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    .lenis.lenis-smooth iframe { pointer-events: none; }
+
+    .skip-link{position:fixed;top:.75rem;left:.75rem;z-index:999;background:#15140f;color:#fff;padding:.5rem 1rem;border-radius:var(--radius-pill);transform:translateY(-120%);transition:transform .2s}
+    .skip-link:focus{transform:translateY(0)}
+    .shell{max-width:var(--container-shell);margin-inline:auto;padding-inline:1.25rem}
+    @media(min-width:640px){.shell{padding-inline:2rem}}
+
+    /* LOADER */
+    #loader{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;background:var(--loader-bg);color:#fff;border-radius:0 0 2rem 2rem;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+    #loader.exit{transform:translateY(-100%)}
+    .loader-brand{display:flex;align-items:center;gap:.625rem;font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem}
+    @media(min-width:640px){.loader-brand{font-size:1.875rem}}
+    .loader-tagline{max-width:24ch;font-size:.875rem;color:rgba(255,255,255,.55);text-align:center}
+    .loader-progress{width:min(22rem,72vw)}
+    .loader-track{height:1px;background:rgba(255,255,255,.15);position:relative;overflow:hidden}
+    .loader-fill{position:absolute;inset:0;background:#c79a52;transform:scaleX(0);transform-origin:left;will-change:transform}
+    .loader-meta{display:flex;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.45);margin-top:.5rem}
+    #loader-content{display:flex;flex-direction:column;align-items:center;gap:2rem;transition:opacity .6s,transform .6s}
+    #loader-content.fade-out{opacity:0;transform:translateY(-12px)}
+
+    /* HEADER */
+    #header{position:fixed;inset-inline:0;top:0;z-index:50;opacity:0;transform:translateY(-14px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+    #header.visible{opacity:1;transform:translateY(0)}
+    .header-bar{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;transition:background .3s,backdrop-filter .3s}
+    @media(min-width:640px){.header-bar{padding:.875rem 2rem}}
+    #header.scrolled .header-bar{background:var(--header-scrolled-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    .header-brand{display:flex;align-items:center;gap:.5rem;font-family:'Fraunces',serif;font-weight:600;font-size:1.125rem;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+    .header-brand:hover{transform:scale(1.04)}
+    .header-nav{display:none;gap:2rem;align-items:center}
+    @media(min-width:1024px){.header-nav{display:flex}}
+    .header-nav a,.header-nav button{font-size:.875rem;font-weight:500;color:var(--muted);transition:color .2s,transform .35s cubic-bezier(.2,.8,.2,1);background:none;border:none;cursor:pointer;padding:0;font-family:inherit}
+    .header-nav a:hover,.header-nav button:hover{color:var(--ink);transform:translateY(-2px)}
+    .header-right{display:flex;align-items:center;gap:1rem}
+    .clock-chip{display:none;font-size:.75rem;color:var(--muted);padding:.375rem .75rem;background:var(--surface);border-radius:var(--radius-pill);white-space:nowrap}
+    @media(min-width:768px){.clock-chip{display:block}}
+    .header-btn{display:flex;align-items:center;gap:.375rem;font-size:.875rem;font-weight:500;padding:.375rem .75rem;border-radius:var(--radius-control);transition:background .2s,transform .35s cubic-bezier(.2,.8,.2,1)}
+    .header-btn:hover{background:var(--surface);transform:scale(1.04)}
+    .menu-btn-text{display:none}
+    @media(min-width:640px){.menu-btn-text{display:inline}}
+
+    /* HERO */
+    #home{position:relative;isolation:isolate;overflow:hidden;border-radius:0 0 2rem 2rem;background:var(--hero-tint);min-height:100lvh}
+    .liquid-container{position:absolute;inset:0;z-index:0}
+    /* NOTE: no <img> here anymore — both images drawn on canvas for perfect alignment */
+    .liquid-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block}
+    .hero-vignette{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,var(--hero-vignette-top),transparent 40%,transparent 60%,var(--hero-vignette-bot));transition:background .4s}
+    .hero-watermark{position:absolute;bottom:4rem;left:50%;transform:translateX(-50%) translateY(20px);z-index:2;font-family:'Fraunces',serif;font-weight:600;font-size:var(--text-watermark);color:var(--watermark-color);white-space:nowrap;letter-spacing:-.02em;pointer-events:none;opacity:0;transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+    .hero-watermark.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+    .hero-content{position:relative;z-index:20;padding:7rem 1.25rem 5rem;display:flex;flex-direction:column;gap:2rem;min-height:100lvh}
+    @media(min-width:1024px){.hero-content{display:grid;grid-template-columns:repeat(12,1fr);gap:1.5rem;padding:9rem 2rem 7rem;align-items:end}}
+    .hero-left{position:relative;z-index:1}
+    @media(min-width:1024px){.hero-left{grid-column:span 7}}
+    .hero-right{position:relative;z-index:1}
+    @media(min-width:1024px){.hero-right{grid-column:span 5;display:flex;flex-direction:column;align-items:flex-end;gap:1.5rem}}
+
+    .hero-eyebrow{display:flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+    .hero-eyebrow.visible{opacity:1;transform:translateY(0)}
+    .eyebrow-dot{width:.375rem;height:.375rem;border-radius:50%;background:var(--accent);flex-shrink:0}
+    .hero-h1{font-family:'Fraunces',serif;font-weight:600;font-size:2.6rem;line-height:1.1;max-width:18ch;margin-top:.75rem}
+    @media(min-width:640px){.hero-h1{font-size:3.6rem}}
+    .line-wrap{overflow:hidden;display:block}
+    .line-inner{display:block;opacity:0;transform:translateY(100%);transition:opacity 900ms cubic-bezier(.215,.61,.355,1),transform 900ms cubic-bezier(.215,.61,.355,1)}
+    .line-inner.visible{opacity:1;transform:translateY(0)}
+    .hero-rating{display:flex;align-items:center;gap:.75rem;font-size:.875rem;color:var(--muted);opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+    .hero-rating.visible{opacity:1;transform:translateY(0)}
+    .stars{display:flex;gap:.125rem;color:var(--accent)}
+    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+    .hero-ctas.visible{opacity:1;transform:translateY(0)}
+    .btn-dark{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.5rem;background:var(--btn-dark-bg);color:var(--bg);border-radius:var(--radius-pill);font-weight:600;font-size:.9rem;transition:background .2s,transform .35s cubic-bezier(.2,.8,.2,1)}
+    .btn-dark:hover{background:var(--btn-dark-hover);transform:scale(1.03)}
+    .btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.5rem;border:1.5px solid var(--btn-outline-border);border-radius:var(--radius-pill);font-weight:600;font-size:.9rem;transition:border-color .2s,background .2s,transform .35s cubic-bezier(.2,.8,.2,1)}
+    .btn-outline:hover{border-color:var(--ink);background:rgba(128,128,128,.06);transform:scale(1.03)}
+    .hero-status{display:flex;align-items:center;gap:1rem;font-size:.75rem;color:var(--muted);opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+    .hero-status.visible{opacity:1;transform:translateY(0)}
+    .status-divider{width:1px;height:.875rem;background:var(--status-div-color)}
+    .status-hidden-sm{display:none}
+    @media(min-width:640px){.status-hidden-sm{display:block}}
+
+    /* HERO CARD */
+    .hero-card{background:var(--card-bg);color:var(--card-text);border-radius:var(--radius-card);padding:1.5rem;min-width:18rem;max-width:22rem;width:100%;opacity:0;transform:scale(.96);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1),background .4s}
+    .hero-card.visible{opacity:1;transform:scale(1)}
+    .hero-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem}
+    .hero-card-cat{font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+    .hero-card-body{margin-bottom:1.5rem}
+    .hero-card-title{font-family:'Fraunces',serif;font-size:1.375rem;font-weight:500;margin-bottom:.25rem}
+    .hero-card-price{font-size:.875rem;color:rgba(255,255,255,.55)}
+    .hero-card-dots{display:flex;gap:.375rem}
+    .card-dot{width:.4375rem;height:.4375rem;border-radius:50%;background:rgba(255,255,255,.25);transition:background .3s;cursor:pointer}
+    .card-dot.active{background:#c79a52}
+    .hero-card-nav{display:flex;gap:.5rem}
+    .card-nav-btn{width:2rem;height:2rem;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);transition:all .2s;flex-shrink:0}
+    .card-nav-btn:hover{border-color:rgba(255,255,255,.6);color:#fff}
+
+    /* TRUST GRID */
+    .trust-grid{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+    .trust-grid.visible{opacity:1;transform:translateY(0)}
+    .trust-label{font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+    .trust-names{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem .875rem}
+    .trust-name{font-size:.8125rem;color:var(--muted);font-weight:500}
+
+    /* EYEBROW */
+    .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.6875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+    .eyebrow::before{content:'';display:block;width:1.25rem;height:1px;background:currentColor;opacity:.5}
+
+    /* ABOUT */
+    #about{padding:5rem 1.25rem}
+    @media(min-width:1024px){#about{padding:7rem 2rem}}
+    .about-grid{max-width:var(--container-shell);margin-inline:auto;display:grid;grid-template-columns:1fr;gap:0}
+    @media(min-width:1024px){.about-grid{grid-template-columns:1fr 1fr}}
+    .about-left{position:relative;padding:3rem 2rem 2rem;overflow:hidden;background:var(--surface);border-radius:var(--radius-card) 0 0 var(--radius-card)}
+    @media(max-width:1023px){.about-left{border-radius:var(--radius-card) var(--radius-card) 0 0}}
+    .about-sun-bg{position:absolute;bottom:-2rem;left:-2rem;font-size:12rem;color:var(--watermark-color);line-height:1;pointer-events:none;z-index:0;user-select:none}
+    .about-left-content{position:relative;z-index:1}
+    .about-craft{display:flex;align-items:flex-start;gap:.75rem;margin-top:2rem;padding:.875rem 1rem;background:rgba(128,128,128,.08);border-radius:var(--radius-card-sm);backdrop-filter:blur(4px)}
+    .about-craft p{font-size:.875rem;color:var(--muted);line-height:1.6}
+    .about-right{padding:3rem 2rem 2rem;border:1px solid var(--line);border-left:none;border-radius:0 var(--radius-card) var(--radius-card) 0}
+    @media(max-width:1023px){.about-right{border-left:1px solid var(--line);border-top:none;border-radius:0 0 var(--radius-card) var(--radius-card)}}
+    .about-statement{font-family:'Fraunces',serif;font-size:1.5rem;line-height:1.55;font-weight:400}
+    @media(min-width:640px){.about-statement{font-size:1.875rem}}
+    .muted-text{color:var(--muted)}
+    .word{display:inline-block;opacity:0;transform:translateY(24px);transition:opacity 700ms cubic-bezier(.165,.84,.44,1),transform 700ms cubic-bezier(.165,.84,.44,1)}
+    .word.visible{opacity:1;transform:translateY(0)}
+    .about-footer{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+    .about-footer-label{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .social-chip{display:inline-flex;align-items:center;gap:.375rem;padding:.375rem .875rem;border:1px solid var(--line);border-radius:var(--radius-pill);font-size:.8125rem;font-weight:500;transition:all .35s cubic-bezier(.2,.8,.2,1)}
+    .social-chip:hover{border-color:var(--ink);background:var(--surface);transform:scale(1.04)}
+    .about-us-btn{display:inline-flex;align-items:center;gap:.375rem;padding:.375rem .875rem;border:1px solid var(--ink);border-radius:var(--radius-pill);font-size:.8125rem;font-weight:600;transition:all .2s}
+    .about-us-btn:hover{background:var(--ink);color:var(--bg)}
+
+    /* PROMISE BAND */
+    #promise{padding:3rem 1.25rem}
+    @media(min-width:640px){#promise{padding:3rem 2rem}}
+    .promise-band{max-width:var(--container-shell);margin-inline:auto;display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+    .promise-pill{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:var(--radius-pill);font-weight:600;font-size:.9375rem;opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+    .promise-pill.visible{opacity:1;transform:translateY(0)}
+    @media(hover:hover){.promise-pill:hover{transform:scale(1.04)!important}}
+    .pill-light{background:var(--surface);color:var(--ink);border:1.5px solid var(--line)}
+    .pill-accent{background:linear-gradient(135deg,#6f9686,#3f6b5c);color:#fff;border:none}
+    .pill-arrow{background:var(--ink);color:var(--bg);border:none;width:3rem;height:3rem;padding:0;justify-content:center;border-radius:50%}
+    .pill-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+
+    /* COLLECTIONS */
+    #shop{padding:5rem 1.25rem}
+    @media(min-width:1024px){#shop{padding:7rem 2rem}}
+    .section-header{max-width:var(--container-shell);margin-inline:auto;margin-bottom:2.5rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .section-header h2{font-family:'Fraunces',serif;font-weight:600;font-size:2rem}
+    @media(min-width:640px){.section-header h2{font-size:2.5rem}}
+    .view-all-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;border:1.5px solid var(--line);border-radius:var(--radius-pill);font-weight:600;font-size:.875rem;transition:all .2s;white-space:nowrap}
+    .view-all-btn:hover{border-color:var(--ink);background:var(--surface)}
+    .collections-grid{max-width:var(--container-shell);margin-inline:auto;display:grid;grid-template-columns:1fr;gap:1.25rem}
+    @media(min-width:640px){.collections-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.collections-grid{grid-template-columns:repeat(4,1fr)}}
+    .col-card{background:var(--card-bg);color:var(--card-text);border-radius:var(--radius-card);display:flex;flex-direction:column;position:relative;overflow:hidden;min-height:22rem;opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.2,.8,.2,1),background .4s;cursor:pointer}
+    .col-card.visible{opacity:1;transform:translateY(0)}
+    @media(hover:hover){.col-card.visible:hover{box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(-4px) scale(1.01)!important}}
+    .col-card-img{width:100%;height:12rem;object-fit:cover;display:block;opacity:.8;transition:opacity .3s,transform .4s}
+    @media(hover:hover){.col-card:hover .col-card-img{opacity:1;transform:scale(1.04)}}
+    .col-card-img-wrap{overflow:hidden;border-radius:var(--radius-card) var(--radius-card) 0 0}
+    .col-card-body{padding:1.25rem 1.5rem 1.5rem;display:flex;flex-direction:column;gap:.75rem;flex:1}
+    .col-card-meta{display:flex;justify-content:space-between;align-items:center}
+    .col-card-cat{font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+    .col-card-price{font-size:.875rem;font-weight:700;color:#c79a52}
+    .col-card-name{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:500}
+    .col-card-desc{font-size:.8125rem;color:rgba(255,255,255,.45);line-height:1.55}
+    .col-card-tags{display:flex;flex-wrap:wrap;gap:.375rem;margin-top:auto}
+    .tag-chip{font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .625rem;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5)}
+
+    /* WHY US */
+    #why{padding:5rem 1.25rem;border-top:1px solid var(--line)}
+    @media(min-width:1024px){#why{padding:7rem 2rem}}
+    .why-inner{max-width:var(--container-shell);margin-inline:auto}
+    .why-header{margin-bottom:2.5rem}
+    .why-header h2{font-family:'Fraunces',serif;font-weight:600;font-size:2rem}
+    @media(min-width:640px){.why-header h2{font-size:2.5rem}}
+    .why-row{display:flex;align-items:center;gap:1rem;padding:1.5rem .75rem;border-top:1px solid var(--line);position:relative;overflow:hidden;opacity:0;transform:translateX(-16px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1),background .4s;border-radius:.5rem;margin-inline:-.75rem}
+    .why-row.visible{opacity:1;transform:translateX(0)}
+    @media(hover:hover){.why-row:hover{background:var(--surface)}}
+    .why-num{font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--subtle);min-width:2rem;flex-shrink:0}
+    .why-title{font-family:'Fraunces',serif;font-size:1.125rem;font-weight:500;min-width:14rem;flex-shrink:0}
+    @media(max-width:640px){.why-title{min-width:auto;font-size:1rem}}
+    .why-desc{font-size:.875rem;color:var(--muted);line-height:1.6;flex:1}
+    .why-arrow{margin-left:auto;flex-shrink:0;opacity:0;transform:translateX(-8px);transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.2,1)}
+    @media(hover:hover){.why-row:hover .why-arrow{opacity:1;transform:translateX(0)}}
+
+    /* STATS */
+    #stats{padding:5rem 1.25rem;background:var(--ink);color:var(--bg);margin:0 1.25rem;border-radius:var(--radius-card);transition:background .4s,color .4s}
+    @media(min-width:640px){#stats{margin:0 2rem;padding:5rem 2rem}}
+    @media(min-width:1024px){#stats{padding:6rem 4rem}}
+    .stats-inner{max-width:var(--container-shell);margin-inline:auto}
+    .stats-header{margin-bottom:3rem}
+    .stats-header .eyebrow{color:rgba(255,255,255,.4)}
+    .stats-header h2{font-family:'Fraunces',serif;font-weight:600;font-size:2rem;max-width:24ch}
+    @media(min-width:640px){.stats-header h2{font-size:2.5rem}}
+    .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem}
+    @media(min-width:1024px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+    .stat-item{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+    .stat-item.visible{opacity:1;transform:translateY(0)}
+    .stat-value{font-family:'Fraunces',serif;font-size:3rem;font-weight:600;line-height:1;margin-bottom:.375rem}
+    @media(min-width:640px){.stat-value{font-size:3.5rem}}
+    .stat-label{font-size:.875rem;color:rgba(255,255,255,.45)}
+    .stat-suffix{color:#c79a52}
+
+    /* FOOTER */
+    #footer{background:var(--ink);color:var(--bg);padding:5rem 1.25rem 2rem;margin-top:2rem;position:relative;overflow:hidden;transition:background .4s,color .4s}
+    @media(min-width:640px){#footer{padding:6rem 2rem 2.5rem}}
+    .footer-inner{max-width:var(--container-shell);margin-inline:auto}
+    .footer-cta{margin-bottom:4rem;max-width:32rem}
+    .footer-cta h2{font-family:'Fraunces',serif;font-size:2.25rem;font-weight:600;margin-bottom:1.5rem;line-height:1.2}
+    @media(min-width:640px){.footer-cta h2{font-size:2.75rem}}
+    .btn-light{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.5rem;background:var(--bg);color:var(--ink);border-radius:var(--radius-pill);font-weight:700;font-size:.9rem;transition:background .2s,transform .35s cubic-bezier(.2,.8,.2,1)}
+    .btn-light:hover{background:var(--bg);transform:scale(1.04)}
+    .footer-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-bottom:3rem}
+    @media(min-width:768px){.footer-cols{grid-template-columns:repeat(3,1fr)}}
+    .footer-col h4{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.875rem}
+    .footer-col ul{display:flex;flex-direction:column;gap:.5rem}
+    .footer-col a{font-size:.9rem;color:rgba(255,255,255,.55);transition:color .2s}
+    .footer-col a:hover{color:#fff}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;display:flex;flex-direction:column;gap:.75rem}
+    @media(min-width:640px){.footer-bottom{flex-direction:row;justify-content:space-between;align-items:center}}
+    .footer-legal{font-size:.8rem;color:rgba(255,255,255,.3)}
+    .footer-legal-links{display:flex;gap:1rem}
+    .footer-legal-links a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .2s}
+    .footer-legal-links a:hover{color:rgba(255,255,255,.6)}
+    .footer-wm{position:absolute;bottom:-2rem;right:-2rem;font-family:'Fraunces',serif;font-weight:600;font-size:var(--text-watermark);color:rgba(255,255,255,.04);pointer-events:none;user-select:none;white-space:nowrap}
+
+    /* NAV MENU */
+    #nav-menu{position:fixed;inset:0;z-index:100;background:var(--ink);display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1),background .4s}
+    #nav-menu.open{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .nav-menu-top{display:flex;justify-content:space-between;align-items:center;padding:1.25rem}
+    @media(min-width:640px){.nav-menu-top{padding:1.25rem 2rem}}
+    .nav-menu-brand{display:flex;align-items:center;gap:.5rem;font-family:'Fraunces',serif;font-weight:600;font-size:1.125rem;color:#fff}
+    .nav-menu-items{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2rem 1.25rem}
+    @media(min-width:640px){.nav-menu-items{padding:2rem 3rem}}
+    .nav-menu-item{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0;border-bottom:1px solid rgba(255,255,255,.07);color:#fff;font-family:'Fraunces',serif;font-weight:500;font-size:2.25rem;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s,color .2s;width:100%;text-align:left;background:none;cursor:pointer}
+    @media(min-width:640px){.nav-menu-item{font-size:3rem}}
+    #nav-menu.open .nav-menu-item{opacity:1;transform:translateY(0)}
+    .nav-menu-item:hover{color:var(--gold)}
+    .nav-menu-bottom{padding:1.5rem 1.25rem;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center}
+    @media(min-width:640px){.nav-menu-bottom{padding:1.5rem 2rem}}
+    .nav-time{font-size:.8125rem;color:rgba(255,255,255,.35)}
+    .nav-shop-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-pill);color:#fff;font-size:.875rem;font-weight:600;transition:all .2s;background:none;cursor:pointer;font-family:inherit}
+    .nav-shop-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4)}
+    .close-btn{width:2.5rem;height:2.5rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.15);color:#fff;transition:all .2s;flex-shrink:0}
+    .close-btn:hover{background:rgba(255,255,255,.08)}
+
+    /* MODAL */
+    #request-modal{position:fixed;inset:0;z-index:110;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s}
+    #request-modal.open{opacity:1;pointer-events:auto}
+    .modal-backdrop{position:absolute;inset:0;background:rgba(21,20,15,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .modal-box{position:relative;z-index:1;background:var(--bg);color:var(--ink);border-radius:var(--radius-card);padding:2.5rem;width:min(34rem,92vw);transform:scale(.95) translateY(12px);transition:transform .45s cubic-bezier(.22,1,.36,1),background .4s}
+    #request-modal.open .modal-box{transform:scale(1) translateY(0)}
+    .modal-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.75rem}
+    .modal-heading{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:600;line-height:1.25}
+    .modal-sub{font-size:.875rem;color:var(--muted);margin-top:.25rem}
+    .modal-close-btn{width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);flex-shrink:0;transition:all .2s;margin-top:.25rem}
+    .modal-close-btn:hover{background:var(--surface)}
+    .form-field{margin-bottom:1.25rem}
+    .form-label{display:block;font-size:.8125rem;font-weight:600;margin-bottom:.5rem;color:var(--ink)}
+    .form-input,.form-textarea{width:100%;padding:.75rem 1rem;border:1.5px solid var(--line);border-radius:var(--radius-control);font:inherit;font-size:.9rem;background:var(--bg);color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none}
+    .form-input:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(63,107,92,.12)}
+    .form-textarea{resize:vertical;min-height:7rem}
+    .form-note{font-size:.75rem;color:var(--muted);margin-top:1rem;margin-bottom:1.25rem}
+    .form-submit{width:100%;padding:.875rem;background:var(--ink);color:var(--bg);border-radius:var(--radius-control);font-weight:700;font-size:.9375rem;transition:background .2s,transform .2s;cursor:pointer;border:none}
+    .form-submit:hover{background:var(--muted);transform:scale(1.01)}
+    .modal-success{text-align:center;padding:1rem 0}
+    .modal-success-icon{font-size:2.5rem;margin-bottom:1rem;color:var(--accent)}
+    .modal-success h3{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:600;margin-bottom:.5rem}
+    .modal-success p{font-size:.9rem;color:var(--muted);max-width:28ch;margin-inline:auto}
+    .hidden{display:none!important}
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- LOADER -->
+<div id="loader" role="status" aria-live="polite">
+  <div id="loader-content">
+    <div class="loader-brand">
+      <svg width="1.5em" height=".75em" viewBox="0 0 48 24" fill="none" stroke="#c79a52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="36" cy="12" r="9"/><path d="M21 12h6"/></svg>
+      Solstice
+    </div>
+    <p class="loader-tagline">Eyewear for every horizon.</p>
+    <div class="loader-progress">
+      <div class="loader-track"><div class="loader-fill" id="loader-fill"></div></div>
+      <div class="loader-meta"><span>Loading</span><span id="loader-count">000</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="header" aria-label="Site header">
+  <div class="header-bar">
+    <a href="#home" class="header-brand" id="header-logo" aria-label="Solstice home">
+      <svg width="1.25em" height=".625em" viewBox="0 0 48 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="36" cy="12" r="9"/><path d="M21 12h6"/></svg>
+      Solstice
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#home" id="nav-home">Home</a>
+      <a href="#shop" id="nav-shop">Shop</a>
+      <a href="collection.html" id="nav-collection">Collection</a>
+      <a href="#about" id="nav-studio">Studio</a>
+      <a href="#why" id="nav-why">Why Us</a>
+      <button id="nav-contact-btn">Contact</button>
+    </nav>
+    <div class="header-right">
+      <button class="header-btn header-btn-auth" id="header-auth-btn">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="menu-btn-text" id="auth-btn-text">Sign In</span>
+      </button>
+      <button class="header-btn header-btn-cart" id="header-cart-btn">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm10 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="header-cart-count" style="background:var(--accent); color:#fff; border-radius:50%; min-width:1.25rem; height:1.25rem; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700;">0</span>
+      </button>
+      <button class="dark-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"></button>
+      <button class="header-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="home" aria-label="Hero">
+  <div class="liquid-container" id="liquid-container">
+    <!-- Both images drawn on canvas for pixel-perfect alignment -->
+    <canvas id="liquid-canvas" class="liquid-canvas"></canvas>
+  </div>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="hero-watermark" id="hero-wm" aria-hidden="true">SOLSTICE</div>
+
+  <div class="hero-content shell">
+    <div class="hero-left">
+      <div class="hero-eyebrow" id="hero-eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        Independent Eyewear Studio
+      </div>
+      <h1 class="hero-h1">
+        <span class="line-wrap"><span class="line-inner" id="hero-line-0">Frames built</span></span>
+        <span class="line-wrap"><span class="line-inner" id="hero-line-1">for wherever</span></span>
+        <span class="line-wrap"><span class="line-inner" id="hero-line-2">the light takes you</span></span>
+      </h1>
+      <div class="hero-rating" id="hero-rating" style="margin-top:1.25rem">
+        <div class="stars" aria-label="5 stars">
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+        </div>
+        <span>12,000+ pairs shipped</span>
+      </div>
+      <div class="hero-ctas" id="hero-ctas" style="margin-top:1.5rem">
+        <a href="#shop" class="btn-dark" id="hero-shop-btn">
+          Shop the Collection
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#about" class="btn-outline" id="hero-story-btn">Our Story</a>
+      </div>
+      <div class="hero-status" id="hero-status" style="margin-top:2rem">
+        <span>Est. 2016</span>
+        <span class="status-divider" aria-hidden="true"></span>
+        <span class="status-hidden-sm">Handmade in small batches</span>
+        <span class="status-divider status-hidden-sm" aria-hidden="true"></span>
+        <span>Scroll to explore &darr;</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card" id="hero-card">
+        <div class="hero-card-header">
+          <span class="hero-card-cat" id="hc-cat">Polarized</span>
+          <div class="hero-card-nav">
+            <button class="card-nav-btn" id="hc-prev" aria-label="Previous"><svg width=".875em" height=".875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+            <button class="card-nav-btn" id="hc-next" aria-label="Next"><svg width=".875em" height=".875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+        <div id="hc-body" class="hero-card-body">
+          <div class="hero-card-title" id="hc-title">Meridian &mdash; Amber</div>
+          <div class="hero-card-price" id="hc-price">$189</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="hero-card-dots" id="hc-dots"><span class="card-dot active"></span><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>
+          <span style="font-size:.75rem;color:rgba(255,255,255,.4)">Featured</span>
+        </div>
+      </div>
+      <div class="trust-grid" id="trust-grid">
+        <div class="trust-label">As seen in</div>
+        <div class="trust-names">
+          <span class="trust-name">Vogue</span><span class="trust-name">Hypebeast</span>
+          <span class="trust-name">Monocle</span><span class="trust-name">Kinfolk</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" aria-label="About the studio">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="about-sun-bg" aria-hidden="true">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.07" y2="19.07"/><line x1="4.93" y1="19.07" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.07" y2="4.93"/></svg>
+      </div>
+      <div class="about-left-content">
+        <div class="eyebrow">The Studio</div>
+        <div class="about-craft">
+          <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" style="flex-shrink:0;margin-top:.125rem"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.07" y2="19.07"/><line x1="4.93" y1="19.07" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.07" y2="4.93"/></svg>
+          <p>Every lens is ground and polarized in-house, not outsourced.</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <p class="about-statement" id="about-statement"></p>
+      <div class="about-footer">
+        <span class="about-footer-label">Find us online</span>
+        <a href="#" class="social-chip">
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="social-chip">
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          TikTok
+        </a>
+        <a href="#" class="about-us-btn">
+          About Us
+          <svg width=".875em" height=".875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE BAND -->
+<section id="promise" aria-label="Our commitments">
+  <div class="promise-band" id="promise-band">
+    <div class="promise-pill pill-light" style="transition-delay:0ms">
+      <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.07" y2="19.07"/><line x1="4.93" y1="19.07" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.07" y2="4.93"/></svg>
+      Polarized
+    </div>
+    <div class="promise-pill pill-accent" style="transition-delay:120ms">By Hand</div>
+    <div class="promise-pill pill-arrow" style="transition-delay:240ms" aria-hidden="true">
+      <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="promise-pill pill-ghost" style="transition-delay:360ms">For Life</div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section id="shop" aria-label="Frame collections">
+  <div class="section-header shell">
+    <div>
+      <div class="eyebrow">Collections</div>
+      <h2><span class="line-wrap"><span class="line-inner" id="shop-line-0">Shop by Frame</span></span></h2>
+    </div>
+    <a href="collection.html" class="view-all-btn">
+      View All
+      <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+    </a>
+  </div>
+  <div class="collections-grid shell">
+    <a href="product.html?slug=meridian" class="col-card" id="col-0" tabindex="0" style="transition-delay:0ms">
+      <div class="col-card-img-wrap"><img class="col-card-img" src="##MERIDIAN_B64##" alt="Meridian sunglasses" loading="lazy" /></div>
+      <div class="col-card-body">
+        <div class="col-card-meta"><span class="col-card-cat">Sunglasses</span><span class="col-card-price">$189</span></div>
+        <div class="col-card-name">Meridian</div>
+        <div class="col-card-desc">Amber polarized lenses, hand-polished acetate.</div>
+        <div class="col-card-tags"><span class="tag-chip">Polarized</span><span class="tag-chip">Acetate</span><span class="tag-chip">UV400</span></div>
+      </div>
+    </a>
+    <a href="product.html?slug=horizon" class="col-card" id="col-1" tabindex="0" style="transition-delay:90ms">
+      <div class="col-card-img-wrap"><img class="col-card-img" src="##HORIZON_B64##" alt="Horizon sunglasses" loading="lazy" /></div>
+      <div class="col-card-body">
+        <div class="col-card-meta"><span class="col-card-cat">Sunglasses</span><span class="col-card-price">$219</span></div>
+        <div class="col-card-name">Horizon</div>
+        <div class="col-card-desc">Mirrored lenses set in a lightweight titanium frame.</div>
+        <div class="col-card-tags"><span class="tag-chip">Titanium</span><span class="tag-chip">Mirrored</span><span class="tag-chip">UV400</span></div>
+      </div>
+    </a>
+    <a href="product.html?slug=solace" class="col-card" id="col-2" tabindex="0" style="transition-delay:180ms">
+      <div class="col-card-img-wrap"><img class="col-card-img" src="##SOLACE_B64##" alt="Solace optical frames" loading="lazy" /></div>
+      <div class="col-card-body">
+        <div class="col-card-meta"><span class="col-card-cat">Optical</span><span class="col-card-price">$149</span></div>
+        <div class="col-card-name">Solace</div>
+        <div class="col-card-desc">A featherweight optical frame, blue-light filter available.</div>
+        <div class="col-card-tags"><span class="tag-chip">Optical</span><span class="tag-chip">Lightweight</span><span class="tag-chip">RX-ready</span></div>
+      </div>
+    </a>
+    <a href="product.html?slug=drift" class="col-card" id="col-3" tabindex="0" style="transition-delay:270ms">
+      <div class="col-card-img-wrap"><img class="col-card-img" src="##DRIFT_B64##" alt="Drift sunglasses" loading="lazy" /></div>
+      <div class="col-card-body">
+        <div class="col-card-meta"><span class="col-card-cat">Sunglasses</span><span class="col-card-price">$179</span></div>
+        <div class="col-card-name">Drift</div>
+        <div class="col-card-desc">Gradient smoke lenses in an oversized round frame.</div>
+        <div class="col-card-tags"><span class="tag-chip">Gradient</span><span class="tag-chip">Oversized</span><span class="tag-chip">UV400</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why" aria-label="Why choose Solstice">
+  <div class="why-inner">
+    <div class="why-header"><div class="eyebrow">Why Solstice</div><h2>What makes a frame worth keeping</h2></div>
+    <div class="why-row" id="why-0" style="transition-delay:0ms"><span class="why-num">01</span><span class="why-title">Polarized, Properly</span><span class="why-desc">Every lens is tuned to cut glare without distorting color.</span><svg class="why-arrow" width="1.25em" height="1.25em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    <div class="why-row" id="why-1" style="transition-delay:80ms"><span class="why-num">02</span><span class="why-title">Acetate That Lasts</span><span class="why-desc">Italian acetate, hand-polished, colorfast for years of wear.</span><svg class="why-arrow" width="1.25em" height="1.25em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    <div class="why-row" id="why-2" style="transition-delay:160ms"><span class="why-num">03</span><span class="why-title">Lifetime Hinge Repair</span><span class="why-desc">Free hinge and screw repair for as long as you own the frame.</span><svg class="why-arrow" width="1.25em" height="1.25em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    <div class="why-row" id="why-3" style="transition-delay:240ms"><span class="why-num">04</span><span class="why-title">Real Prescriptions</span><span class="why-desc">Upload a prescription at checkout &mdash; no separate optician visit.</span><svg class="why-arrow" width="1.25em" height="1.25em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats" aria-label="By the numbers">
+  <div class="stats-inner">
+    <div class="stats-header"><div class="eyebrow">By the Numbers</div><h2>Proof in the polish,<br>not the pitch.</h2></div>
+    <div class="stats-grid">
+      <div class="stat-item" id="stat-0" style="transition-delay:0ms"><div class="stat-value"><span class="stat-num" data-target="60000">0</span><span class="stat-suffix">+</span></div><div class="stat-label">Frames shipped</div></div>
+      <div class="stat-item" id="stat-1" style="transition-delay:90ms"><div class="stat-value"><span class="stat-num" data-target="98">0</span><span class="stat-suffix">%</span></div><div class="stat-label">Would buy again</div></div>
+      <div class="stat-item" id="stat-2" style="transition-delay:180ms"><div class="stat-value"><span class="stat-num" data-target="9">0</span></div><div class="stat-label">Years of craft</div></div>
+      <div class="stat-item" id="stat-3" style="transition-delay:270ms"><div class="stat-value"><span class="stat-num" data-target="24">0</span><span class="stat-suffix">hr</span></div><div class="stat-label">Ship time</div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="footer" aria-label="Site footer">
+  <div class="footer-inner">
+    <div class="footer-cta">
+      <h2>
+        <span class="line-wrap"><span class="line-inner" id="footer-line-0">Ready for your</span></span>
+        <span class="line-wrap"><span class="line-inner" id="footer-line-1">next pair?</span></span>
+      </h2>
+      <a href="collection.html" class="btn-light" style="margin-top:1.5rem">
+        Shop Now
+        <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="#about">Studio</a></li><li><a href="#why">Why Us</a></li><li><a href="#">Careers</a></li><li><a href="#" id="footer-contact-link">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Shop</h4><ul><li><a href="collection.html">Sunglasses</a></li><li><a href="collection.html">Optical</a></li><li><a href="collection.html">Accessories</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul><li><a href="#">Order History</a></li><li><a href="#">Sign In</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-legal">&copy; 2026 Solstice Eyewear. All rights reserved.</span>
+      <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+  <div class="footer-wm" aria-hidden="true">SOLSTICE</div>
+</footer>
+
+<!-- NAV MENU -->
+<nav id="nav-menu" aria-label="Full-screen navigation" aria-hidden="true">
+  <div class="nav-menu-top">
+    <div class="nav-menu-brand">
+      <svg width="1.25em" height=".625em" viewBox="0 0 48 24" fill="none" stroke="#c79a52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="36" cy="12" r="9"/><path d="M21 12h6"/></svg>
+      Solstice
+    </div>
+    <button class="close-btn" id="menu-close" aria-label="Close menu">
+      <svg width="1.25em" height="1.25em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l16 16M20 4 4 20"/></svg>
+    </button>
+  </div>
+  <div class="nav-menu-items">
+    <button class="nav-menu-item" id="nm-home" style="transition-delay:60ms"><span>Home</span><svg width=".75em" height=".75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+    <button class="nav-menu-item" id="nm-shop" style="transition-delay:110ms"><span>Shop</span><svg width=".75em" height=".75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+    <a href="collection.html" class="nav-menu-item" id="nm-collection" style="transition-delay:155ms"><span>Collection</span><svg width=".75em" height=".75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    <button class="nav-menu-item" id="nm-studio" style="transition-delay:210ms"><span>Studio</span><svg width=".75em" height=".75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+    <button class="nav-menu-item" id="nm-why" style="transition-delay:260ms"><span>Why Us</span><svg width=".75em" height=".75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+    <button class="nav-menu-item" id="nm-contact" style="transition-delay:310ms"><span>Contact</span><svg width=".75em" height=".75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+  </div>
+  <div class="nav-menu-bottom">
+    <span class="nav-time">Local time &mdash; <span id="nav-clock">9:41am</span></span>
+    <button class="nav-shop-btn" id="nm-shop-btn">Shop Now <svg width=".875em" height=".875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+</nav>
+
+<!-- MODAL -->
+<div id="request-modal" role="dialog" aria-modal="true" aria-label="Contact us" aria-hidden="true">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-box">
+    <div id="modal-form-view">
+      <div class="modal-top">
+        <div><div class="modal-heading">Get in touch</div><div class="modal-sub">Tell us what you&rsquo;re looking for.</div></div>
+        <button class="modal-close-btn" id="modal-close" aria-label="Close"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l16 16M20 4 4 20"/></svg></button>
+      </div>
+      <form id="contact-form" novalidate>
+        <div class="form-field"><label class="form-label" for="contact-name">Name</label><input class="form-input" type="text" id="contact-name" name="name" autocomplete="name" required /></div>
+        <div class="form-field"><label class="form-label" for="contact-email">Email</label><input class="form-input" type="email" id="contact-email" name="email" autocomplete="email" required /></div>
+        <div class="form-field"><label class="form-label" for="contact-message">Message</label><textarea class="form-textarea" id="contact-message" name="message" required></textarea></div>
+        <p class="form-note">We reply within one business day.</p>
+        <button type="submit" class="form-submit">Send message</button>
+      </form>
+    </div>
+    <div id="modal-success-view" class="modal-success hidden">
+      <div class="modal-success-icon">&#10003;</div>
+      <h3>Message received</h3>
+      <p>Thanks for reaching out &mdash; we&rsquo;ll get back to you within one business day.</p>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": { "lenis": "https://unpkg.com/lenis@1.3.23/dist/lenis.mjs" } }
+</script>
+<script type="module">
+import Lenis from 'lenis';
+
+window.scrollTo(0, 0);
+const html = document.documentElement;
+const lenis = new Lenis({ smoothWheel: true });
+function rafLoop(t){ lenis.raf(t); requestAnimationFrame(rafLoop); }
+requestAnimationFrame(rafLoop);
+
+// ── SCROLL LOCK ──
+let menuOpen = false, modalOpen = false;
+function stopScroll(){ lenis.stop(); html.style.position='relative'; html.style.overflow='hidden'; html.style.height='100%'; }
+function startScroll(){ lenis.start(); html.style.removeProperty('position'); html.style.removeProperty('overflow'); html.style.removeProperty('height'); }
+stopScroll();
+
+// ── ADAPTIVE GRID ──
+function applyGrid(){
+  const w = window.innerWidth;
+  const size = 16 - (16*(((1920-w)/1920)*100)*0.6666)/100;
+  if(size > 16) html.style.fontSize = size+'px';
+  else html.style.removeProperty('font-size');
+}
+applyGrid(); window.addEventListener('resize', applyGrid);
+
+// ── CLOCK ──
+function tick(){
+  try{
+    const d=new Date(), H=d.getHours(), M=String(d.getMinutes()).padStart(2,'0');
+    const h=H%12||12, ap=H>=12?'pm':'am';
+    const mo=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const s=`${h}:${M}${ap}`;
+    const dt=`${d.getDate()} ${mo[d.getMonth()]}, ${d.getFullYear()}`;
+    const hc=document.getElementById('header-clock');
+    const nc=document.getElementById('nav-clock');
+    if(hc) hc.textContent=`${s} \u00b7 ${dt}`;
+    if(nc) nc.textContent=s;
+  }catch{}
+}
+tick(); setInterval(tick,1000);
+
+// ── LOADER ──
+const FILL_MS=1300;
+const fill=document.getElementById('loader-fill');
+const cnt=document.getElementById('loader-count');
+const loader=document.getElementById('loader');
+const lc=document.getElementById('loader-content');
+let ready=false; const readyCbs=[];
+function eic(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+let ls=null;
+function loaderTick(ts){
+  if(!ls) ls=ts;
+  const p=Math.min((ts-ls)/FILL_MS,1), e=eic(p);
+  fill.style.transform=`scaleX(${e})`;
+  cnt.textContent=String(Math.round(e*100)).padStart(3,'0');
+  if(p<1){requestAnimationFrame(loaderTick);return;}
+  lc.classList.add('fade-out');
+  setTimeout(()=>{
+    loader.classList.add('exit');
+    loader.addEventListener('transitionend',()=>{
+      loader.remove(); ready=true; startScroll(); readyCbs.forEach(f=>f());
+    },{once:true});
+  },120);
+}
+requestAnimationFrame(loaderTick);
+function onReady(fn){if(ready)setTimeout(fn,0);else readyCbs.push(fn);}
+
+// ── HERO REVEALS ──
+onReady(()=>{
+  setTimeout(()=>document.getElementById('header').classList.add('visible'),150);
+  setTimeout(()=>document.getElementById('hero-eyebrow').classList.add('visible'),200);
+  ['hero-line-0','hero-line-1','hero-line-2'].forEach((id,i)=>
+    setTimeout(()=>document.getElementById(id).classList.add('visible'),250+i*120));
+  setTimeout(()=>document.getElementById('hero-card').classList.add('visible'),400);
+  setTimeout(()=>document.getElementById('trust-grid').classList.add('visible'),550);
+  setTimeout(()=>document.getElementById('hero-rating').classList.add('visible'),650);
+  setTimeout(()=>document.getElementById('hero-ctas').classList.add('visible'),750);
+  setTimeout(()=>document.getElementById('hero-status').classList.add('visible'),900);
+  setTimeout(()=>document.getElementById('hero-wm').classList.add('visible'),300);
+  initLiquidReveal();
+});
+
+// ── LIQUID REVEAL (FIXED: both images on canvas, neon glasses on dark mode) ──
+function initLiquidReveal(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const container = document.getElementById('liquid-container');
+  const canvas = document.getElementById('liquid-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio||1, 2);
+  const BRUSH_R = 145;
+  const DECAY = 0.016;
+
+  // Load both images
+  const baseImg = new Image();
+  const overImg = new Image();
+  baseImg.src = '##BARE_B64##';
+  overImg.src = '##GLASSES_B64##';
+
+  let offBase = null, offOver = null, offNeon = null;
+  let brushC = null, brushCtx = null;
+  let radius = 0;
+
+  function drawCover(ctx, img, cw, ch){
+    const iw=img.naturalWidth, ih=img.naturalHeight;
+    if(!iw||!ih) return;
+    const scale=Math.max(cw/iw, ch/ih);
+    const sw=iw*scale, sh=ih*scale;
+    ctx.drawImage(img, (cw-sw)/2, (ch-sh)/2, sw, sh);
+  }
+
+  function buildNeonLayer(W, H){
+    if(!offBase || !offOver) return;
+    offNeon = document.createElement('canvas');
+    offNeon.width = W; offNeon.height = H;
+    const nctx = offNeon.getContext('2d');
+    nctx.drawImage(offOver, 0, 0);
+
+    try {
+      const baseData = offBase.getContext('2d').getImageData(0, 0, W, H);
+      const overData = offOver.getContext('2d').getImageData(0, 0, W, H);
+      const neonData = nctx.getImageData(0, 0, W, H);
+
+      const bd = baseData.data, od = overData.data, nd = neonData.data;
+      const len = bd.length;
+
+      // Find glasses mask and apply vibrant neon cyber colors ONLY to the glasses
+      for (let i = 0; i < len; i += 4) {
+        const rDiff = Math.abs(od[i] - bd[i]);
+        const gDiff = Math.abs(od[i+1] - bd[i+1]);
+        const bDiff = Math.abs(od[i+2] - bd[i+2]);
+        const diff = rDiff + gDiff + bDiff;
+
+        // If difference is significant, this pixel belongs to the glasses / sunglasses
+        if (diff > 35) {
+          const lum = 0.299 * od[i] + 0.587 * od[i+1] + 0.114 * od[i+2];
+          // Neon Cyan / Electric Gold lens & rim tint
+          if (lum < 95) {
+            // Dark tinted lens area -> electric neon cyan glow with high saturation
+            nd[i]   = Math.min(255, od[i] * 0.3 + 0);      // R
+            nd[i+1] = Math.min(255, od[i+1] * 0.4 + 235);  // G (electric cyan)
+            nd[i+2] = Math.min(255, od[i+2] * 0.4 + 255);  // B
+          } else {
+            // Frame highlights / edges -> vivid luminous electric gold / teal rim
+            nd[i]   = Math.min(255, od[i] * 0.6 + 50);
+            nd[i+1] = Math.min(255, od[i+1] * 0.8 + 220);
+            nd[i+2] = Math.min(255, od[i+2] * 0.7 + 240);
+          }
+        }
+      }
+      nctx.putImageData(neonData, 0, 0);
+    } catch(e) {
+      console.warn("Neon glasses layer fallback:", e);
+    }
+  }
+
+  function buildOffscreens(){
+    const W = canvas.width, H = canvas.height;
+    // Base offscreen
+    offBase = document.createElement('canvas');
+    offBase.width = W; offBase.height = H;
+    const bx = offBase.getContext('2d');
+    if (baseImg.complete && baseImg.naturalWidth) drawCover(bx, baseImg, W, H);
+    else baseImg.onload = () => { drawCover(bx, baseImg, W, H); renderBase(); };
+
+    // Over offscreen
+    offOver = document.createElement('canvas');
+    offOver.width = W; offOver.height = H;
+    const ox = offOver.getContext('2d');
+    if (overImg.complete && overImg.naturalWidth) {
+      drawCover(ox, overImg, W, H);
+      buildNeonLayer(W, H);
+    } else {
+      overImg.onload = () => {
+        drawCover(ox, overImg, W, H);
+        buildNeonLayer(W, H);
+      };
+    }
+
+    // Brush
+    radius = BRUSH_R * dpr;
+    const bs = Math.ceil(radius * 2);
+    brushC = document.createElement('canvas'); brushC.width = bs; brushC.height = bs;
+    brushCtx = brushC.getContext('2d');
+  }
+
+  function renderBase(){
+    if(!offBase) return;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(offBase, 0, 0);
+  }
+
+  function resize(){
+    const rect = container.getBoundingClientRect();
+    canvas.width = Math.ceil(rect.width * dpr);
+    canvas.height = Math.ceil(rect.height * dpr);
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    buildOffscreens();
+    renderBase();
+    lastX = -1; lastY = -1;
+  }
+
+  function makeBrush(){
+    brushCtx.clearRect(0, 0, brushC.width, brushC.height);
+    const r = radius;
+    const g = brushCtx.createRadialGradient(r, r, 0, r, r, r);
+    g.addColorStop(0, 'rgba(0,0,0,1)');
+    g.addColorStop(0.55, 'rgba(0,0,0,0.85)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    brushCtx.fillStyle = g;
+    brushCtx.fillRect(0, 0, brushC.width, brushC.height);
+  }
+
+  // Stamp the "over" (or "neon") image at (x,y) masked by the radial brush
+  function stamp(x,y){
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const source = (isDark && offNeon) ? offNeon : offOver;
+    if(!source || !brushC) return;
+
+    const r = radius;
+    const tmp = document.createElement('canvas');
+    tmp.width = brushC.width; tmp.height = brushC.height;
+    const tc = tmp.getContext('2d');
+    tc.drawImage(source, -(x-r), -(y-r));
+    tc.globalCompositeOperation = 'destination-in';
+    tc.drawImage(brushC, 0, 0);
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.drawImage(tmp, x-r, y-r);
+  }
+
+  let lastX = -1, lastY = -1, idleF = 0;
+  function frameTick(){
+    requestAnimationFrame(frameTick);
+    if(!offBase) return;
+    const fd = idleF > 120 ? Math.min(DECAY + idleF * 0.004, 0.5) : DECAY;
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = `rgba(0,0,0,${fd})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = 'destination-over';
+    if(offBase) ctx.drawImage(offBase, 0, 0);
+    idleF++;
+  }
+
+  function onMove(e){
+    const rect = container.getBoundingClientRect();
+    const cx = (e.clientX - rect.left) * dpr;
+    const cy = (e.clientY - rect.top) * dpr;
+    idleF = 0; makeBrush();
+    if(lastX < 0){ lastX = cx; lastY = cy; stamp(cx, cy); return; }
+    const dx = cx - lastX, dy = cy - lastY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const step = Math.max(radius * 0.25, 1);
+    const steps = Math.min(Math.floor(dist/step), 60);
+    for(let i = 1; i <= steps; i++){
+      const t = i/steps;
+      stamp(lastX + dx*t, lastY + dy*t);
+    }
+    stamp(cx, cy);
+    lastX = cx; lastY = cy;
+  }
+
+  resize();
+  window.addEventListener('resize', () => { resize(); });
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerleave', () => { lastX = -1; lastY = -1; });
+  frameTick();
+}
+
+// ── HERO CARD CAROUSEL ──
+const CARDS=[
+  {cat:'Polarized',title:'Meridian \u2014 Amber',price:'$189'},
+  {cat:'Titanium',title:'Horizon \u2014 Mirrored',price:'$219'},
+  {cat:'Optical',title:'Solace \u2014 Clear',price:'$149'},
+  {cat:'Men\'s Edit',title:'Horizon \u2014 Men\'s',price:'$219'},
+];
+let ci=0;
+const hcBody=document.getElementById('hc-body');
+function showCard(idx){
+  hcBody.style.opacity='0'; hcBody.style.transform='translateY(6px)';
+  setTimeout(()=>{
+    ci=((idx%CARDS.length)+CARDS.length)%CARDS.length;
+    document.getElementById('hc-cat').textContent=CARDS[ci].cat;
+    document.getElementById('hc-title').textContent=CARDS[ci].title;
+    document.getElementById('hc-price').textContent=CARDS[ci].price;
+    document.getElementById('hc-dots').querySelectorAll('.card-dot').forEach((d,i)=>d.classList.toggle('active',i===ci));
+    hcBody.style.transition='opacity .35s cubic-bezier(.2,.8,.2,1),transform .35s cubic-bezier(.2,.8,.2,1)';
+    hcBody.style.opacity='1'; hcBody.style.transform='translateY(0)';
+  },160);
+}
+document.getElementById('hc-prev').addEventListener('click',()=>showCard(ci-1));
+document.getElementById('hc-next').addEventListener('click',()=>showCard(ci+1));
+setInterval(()=>showCard(ci+1),4000);
+
+// ── ABOUT WORD REVEAL ──
+const aboutEl=document.getElementById('about-statement');
+[
+  {text:'We design eyewear the way an optician thinks and a jeweler finishes \u2014 ',muted:false},
+  {text:'polarization tuned by lens, hinges hand-set, acetate polished until it disappears against skin.',muted:true},
+].forEach(({text,muted})=>{
+  text.split(' ').filter(Boolean).forEach((w)=>{
+    const s=document.createElement('span');
+    s.className='word'+(muted?' muted-text':'');
+    s.textContent=w;
+    aboutEl.appendChild(s);
+    aboutEl.appendChild(document.createTextNode(' '));
+  });
+  if(!muted) aboutEl.appendChild(document.createTextNode(' '));
+});
+
+// ── INTERSECTION OBSERVERS ──
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target;
+    if(el.id==='about-statement'){
+      el.querySelectorAll('.word').forEach((w,i)=>setTimeout(()=>w.classList.add('visible'),i*35));
+      io.unobserve(el); return;
+    }
+    el.classList.add('visible'); io.unobserve(el);
+  });
+},{threshold:0.12});
+document.querySelectorAll('.col-card,.why-row,.stat-item,.promise-pill').forEach(el=>io.observe(el));
+document.querySelectorAll('#shop-line-0,#footer-line-0,#footer-line-1').forEach(el=>io.observe(el));
+io.observe(aboutEl);
+
+// Stats count-up
+let counted=false;
+function eoe(t){return t===1?1:1-Math.pow(2,-10*t);}
+const sio=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting||counted) return;
+    counted=true;
+    document.querySelectorAll('.stat-num').forEach(el=>{
+      const target=+el.dataset.target, start=performance.now(), dur=1800;
+      (function f(now){
+        const t=Math.min((now-start)/dur,1),v=Math.round(eoe(t)*target);
+        el.textContent=target>=1000?v.toLocaleString():String(v);
+        if(t<1) requestAnimationFrame(f);
+        else el.textContent=target>=1000?target.toLocaleString():String(target);
+      })(start);
+    });
+    sio.disconnect();
+  });
+},{threshold:0.3});
+sio.observe(document.getElementById('stats'));
+
+// ── SCROLL ──
+lenis.on('scroll',({scroll})=>document.getElementById('header').classList.toggle('scrolled',scroll>40));
+function scrollTo(sel,off=-80){const el=document.querySelector(sel);if(el)lenis.scrollTo(el,{offset:off});}
+
+// ── NAV MENU ──
+const navMenu=document.getElementById('nav-menu');
+function openMenu(){menuOpen=true;navMenu.classList.add('open');navMenu.setAttribute('aria-hidden','false');document.getElementById('menu-btn').setAttribute('aria-expanded','true');stopScroll();}
+function closeMenu(){menuOpen=false;navMenu.classList.remove('open');navMenu.setAttribute('aria-hidden','true');document.getElementById('menu-btn').setAttribute('aria-expanded','false');if(!modalOpen)startScroll();}
+document.getElementById('menu-btn').addEventListener('click',openMenu);
+document.getElementById('menu-close').addEventListener('click',closeMenu);
+document.getElementById('nm-home').addEventListener('click',()=>{closeMenu();setTimeout(()=>scrollTo('#home',0),320);});
+document.getElementById('nm-shop').addEventListener('click',()=>{closeMenu();setTimeout(()=>scrollTo('#shop'),320);});
+document.getElementById('nm-studio').addEventListener('click',()=>{closeMenu();setTimeout(()=>scrollTo('#about'),320);});
+document.getElementById('nm-why').addEventListener('click',()=>{closeMenu();setTimeout(()=>scrollTo('#why'),320);});
+document.getElementById('nm-contact').addEventListener('click',()=>{closeMenu();setTimeout(openModal,320);});
+document.getElementById('nm-shop-btn').addEventListener('click',()=>{closeMenu();setTimeout(()=>scrollTo('#shop'),320);});
+
+// ── MODAL ──
+const modal=document.getElementById('request-modal');
+function openModal(){modalOpen=true;modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.getElementById('modal-form-view').classList.remove('hidden');document.getElementById('modal-success-view').classList.add('hidden');document.getElementById('contact-form').reset();stopScroll();setTimeout(()=>document.getElementById('contact-name').focus(),150);}
+function closeModal(){modalOpen=false;modal.classList.remove('open');modal.setAttribute('aria-hidden','true');if(!menuOpen)startScroll();}
+document.getElementById('modal-close').addEventListener('click',closeModal);
+document.getElementById('modal-backdrop').addEventListener('click',closeModal);
+document.getElementById('nav-contact-btn').addEventListener('click',openModal);
+document.getElementById('footer-contact-link').addEventListener('click',e=>{e.preventDefault();openModal();});
+document.getElementById('contact-form').addEventListener('submit',e=>{e.preventDefault();document.getElementById('modal-form-view').classList.add('hidden');document.getElementById('modal-success-view').classList.remove('hidden');setTimeout(closeModal,3500);});
+
+// Smooth scroll links
+document.getElementById('header-logo').addEventListener('click',e=>{e.preventDefault();scrollTo('#home',0);});
+document.getElementById('nav-home').addEventListener('click',e=>{e.preventDefault();scrollTo('#home',0);});
+document.getElementById('nav-shop').addEventListener('click',e=>{e.preventDefault();scrollTo('#shop');});
+document.getElementById('nav-studio').addEventListener('click',e=>{e.preventDefault();scrollTo('#about');});
+document.getElementById('nav-why').addEventListener('click',e=>{e.preventDefault();scrollTo('#why');});
+document.getElementById('hero-shop-btn').addEventListener('click',e=>{e.preventDefault();scrollTo('#shop');});
+document.getElementById('hero-story-btn').addEventListener('click',e=>{e.preventDefault();scrollTo('#about');});
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(modalOpen)closeModal();else if(menuOpen)closeMenu();}});
+</script>
+##FRONTEND_COMPONENTS##
+</body>
+</html>

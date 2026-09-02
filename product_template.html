@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solstice &mdash; Product Details</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px;-webkit-font-smoothing:antialiased}
+    body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; transition:background .4s,color .4s;}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+    :root{
+      --bg:#f7f4ec;--ink:#15140f;--muted:#847d6d;--subtle:#b7b0a0;--line:#e4ddca;
+      --surface:#efe8d8;--accent:#3f6b5c;--gold:#c79a52;
+      --header-bg:rgba(247,244,236,.9);
+      --card-bg:#fff;--card-text:#15140f;
+      --footer-bg:#15140f;--footer-text:#fff;
+      --radius-pill:9999px;--radius-card:1.75rem;--radius-control:.875rem;
+    }
+    [data-theme="dark"]{
+      --bg:#0c0b08;--ink:#f0ece0;--muted:#9a9282;--subtle:#5a5446;--line:#222018;
+      --surface:#15140e;--accent:#5a9b83;--gold:#d4a85a;
+      --header-bg:rgba(12,11,8,.92);
+      --card-bg:#15140e;--card-text:#f0ece0;
+      --footer-bg:#080806;--footer-text:#f0ece0;
+    }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    .lenis.lenis-smooth iframe { pointer-events: none; }
+
+    /* HEADER */
+    .site-header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background .4s,border-color .4s}
+    .site-header-inner{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;max-width:78rem;margin-inline:auto}
+    .header-brand{display:flex;align-items:center;gap:.5rem;font-family:'Fraunces',serif;font-weight:600;font-size:1.125rem;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;color:var(--muted);transition:color .2s}
+    .back-btn:hover{color:var(--ink)}
+
+    /* PRODUCT LAYOUT */
+    main { flex: 1; }
+    .product-grid { max-width:78rem; margin: 0 auto; display:grid; grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.25rem; }
+    @media(min-width:1024px) { .product-grid { grid-template-columns: 1fr 1fr; padding: 6rem 2rem; align-items: center; } }
+    
+    .product-img-wrap { border-radius: var(--radius-card); overflow: hidden; background: var(--card-bg); border:1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,0.1); aspect-ratio: 4/5; display:flex; align-items:center; justify-content:center; transition:background .4s;}
+    .product-img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .product-eyebrow { font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+    .product-title { font-family:'Fraunces',serif; font-size:3rem; font-weight:600; margin-bottom:1rem; line-height:1.1; color:var(--ink); }
+    .product-price { font-size:1.5rem; font-weight:600; color:var(--gold); margin-bottom:2rem; }
+    .product-desc { font-size:1.125rem; color:var(--muted); line-height:1.6; margin-bottom:3rem; max-width: 40ch; }
+    
+    .specs-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+    .spec-item { border-left: 2px solid var(--line); padding-left: 1rem; }
+    .spec-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+    .spec-value { font-weight: 500; font-size: 0.875rem; color:var(--ink); }
+
+    .action-row { display:flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-dark { flex: 1; min-width: 12rem; display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:1.25rem 2rem; background:var(--ink); color:var(--bg); border-radius:var(--radius-pill); font-weight:700; font-size:1rem; transition:transform .2s, opacity .2s; border:none; cursor:pointer; }
+    .btn-dark:hover { transform:scale(1.02); opacity:0.95; }
+    .btn-gold { flex: 1; min-width: 12rem; display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:1.25rem 2rem; background:linear-gradient(135deg, #e4c281, #c79a52); color:#fff; border-radius:var(--radius-pill); font-weight:700; font-size:1rem; transition:transform .2s; border:none; cursor:pointer; }
+    .btn-gold:hover { transform:scale(1.02); }
+
+    /* FOOTER */
+    #footer{background:var(--footer-bg);color:var(--footer-text);padding:4rem 1.25rem 2rem;border-top:1px solid var(--line);transition:background .4s,color .4s;}
+    .footer-inner{max-width:78rem;margin-inline:auto; text-align:center;}
+
+    /* TOAST */
+    #toast-container{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:.5rem;align-items:center;pointer-events:none}
+    .toast{background:var(--ink);color:var(--bg);padding:.75rem 1.25rem;border-radius:var(--radius-pill);font-size:.875rem;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:toast-in .4s cubic-bezier(.16,1,.3,1) forwards}
+    @keyframes toast-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="header-brand">
+        <svg width="1.25em" height=".625em" viewBox="0 0 48 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="36" cy="12" r="9"/><path d="M21 12h6"/></svg>
+        Solstice
+      </a>
+      <a href="collection.html" class="back-btn" style="margin-left:auto; margin-right:1.5rem;">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Collection
+      </a>
+      <div style="display:flex; gap:1rem; align-items:center;">
+        <button class="header-btn-auth" id="header-auth-btn" style="background:none; border:none; display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-family:inherit; font-weight:500;">
+          <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="auth-btn-text">Sign In</span>
+        </button>
+        <button class="header-btn-cart" id="header-cart-btn" style="background:none; border:none; display:flex; align-items:center; cursor:pointer;">
+          <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm10 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span id="header-cart-count" style="background:var(--accent); color:#fff; border-radius:50%; min-width:1.25rem; height:1.25rem; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; margin-left:0.25rem;">0</span>
+        </button>
+        <div class="header-fav-wrap">
+          <button class="header-btn-fav" aria-label="Open favourites" style="background:none; border:none; display:flex; align-items:center; cursor:pointer; color:var(--ink);">
+            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <span class="fav-badge" id="header-fav-badge"></span>
+        </div>
+        <button class="dark-toggle" aria-label="Toggle dark mode"></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="product-grid">
+      <div class="product-img-wrap">
+        <img src="##MERIDIAN_B64##" alt="Product Image" id="p-img" class="product-img" />
+      </div>
+      <div class="product-details">
+        <div class="product-eyebrow" id="p-category">SUNGLASSES</div>
+        <h1 class="product-title" id="p-title">Loading...</h1>
+        <div class="product-price" id="p-price">$--</div>
+        <p class="product-desc" id="p-desc">Please wait while we load the product details.</p>
+        
+        <div class="specs-grid">
+          <div class="spec-item">
+            <div class="spec-label">Material</div>
+            <div class="spec-value">Hand-polished Acetate</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Lenses</div>
+            <div class="spec-value">Premium Polarized</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Hardware</div>
+            <div class="spec-value">Custom 5-barrel Hinges</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Protection</div>
+            <div class="spec-value">100% UVA/UVB</div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-dark" id="btn-add">Add to Cart</button>
+          <button class="btn-fav" id="btn-fav" data-slug="" aria-label="Save to favourites">
+            <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Save
+          </button>
+          <button class="btn-gold" id="btn-buy">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer">
+    <div class="footer-inner">
+      <p style="font-size:0.875rem; color:rgba(255,255,255,0.45);">&copy; 2025 Solstice Studio. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" aria-live="polite"></div>
+
+  <script>
+    function showToast(msg){
+      const c=document.getElementById('toast-container');
+      const t=document.createElement('div');
+      t.className='toast'; t.textContent=msg;
+      c.appendChild(t);
+      setTimeout(()=>t.remove(), 3500);
+    }
+    
+    // Dynamic logic for product hydration based on URL parameter ?slug=...
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      let slug = urlParams.get('slug') || 'meridian'; // Default fallback
+      
+      const imgMap = {
+        'meridian': '##MERIDIAN_B64##',
+        'horizon': '##HORIZON_B64##',
+        'solace': '##SOLACE_B64##',
+        'drift': '##DRIFT_B64##',
+        'horizon-mens': '##HORIZON_B64##'
+      };
+
+      try {
+        const res = await fetch(`http://localhost:3001/api/products/${slug}`);
+        if(res.ok) {
+          const product = await res.json();
+          document.getElementById('p-title').textContent = product.name;
+          document.getElementById('p-price').textContent = `$${(product.price_cents / 100).toFixed(0)}`;
+          document.getElementById('p-desc').textContent = product.description;
+          document.getElementById('p-category').textContent = product.category;
+          document.title = `Solstice \u2014 ${product.name}`;
+          
+          if(imgMap[slug]) document.getElementById('p-img').src = imgMap[slug];
+
+          // Set slug on the fav button and re-init so favorites system picks it up
+          const favBtn = document.getElementById('btn-fav');
+          if(favBtn) {
+            favBtn.dataset.slug = product.slug;
+            // Re-run init now that data-slug is set (initFavoritesUI already ran at DOMContentLoaded but slug was empty then)
+            if(window._initFavoritesUI) window._initFavoritesUI();
+          }
+
+          document.getElementById('btn-add').addEventListener('click', () => {
+            if(window.addToCart) window.addToCart(product.slug, product.name, product.price_cents/100);
+          });
+          
+          document.getElementById('btn-buy').addEventListener('click', () => {
+            if(window.addToCart) window.addToCart(product.slug, product.name, product.price_cents/100);
+            setTimeout(() => { if(window.App && window.App.openCart) window.App.openCart(); }, 500);
+          });
+        } else {
+          document.getElementById('p-title').textContent = "Product Not Found";
+        }
+      } catch(e) {
+        document.getElementById('p-title').textContent = "Error Loading Product";
+      }
+    });
+  </script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script>
+    if(window.Lenis){
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+  </script>
+  ##FRONTEND_COMPONENTS##
+</body>
+</html>
